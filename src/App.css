@@ -9,23 +9,9 @@
   min-height: 100vh;
 }
 
-.content-wrap {
-  flex: 1;
-}
-
 .heading {
-  text-align: center;
-}
-
-.button {
-  width: fit-content;
-  padding: 5px 10px;
-  color: white;
-  background-color: rgb(38, 74, 235);
-  border: none;
-  border-radius: 5px;
-}
-
-.button:hover {
-  background-color: rgb(173, 183, 231);
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,3 +1,56 @@
+.grid-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .grid {
-  margin: 5px auto;
+  margin: 10px auto;
+}
+
+.cell {
+  background-color: white;
+}
+
+.cell:hover {
+  background: rgb(191, 196, 202);
+}
+
+.button {
+  width: fit-content;
+  height: fit-content;
+  padding: 5px 10px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.start {
+  background-color: green;
+}
+
+.start:hover {
+  background-color: rgb(51, 221, 51);
+}
+
+.stop {
+  background-color: orange;
+}
+
+.stop:hover {
+  background-color: rgb(241, 174, 50);
+}
+
+.red {
+  background-color: rgb(167, 62, 62);
+}
+
+.red:hover {
+  background-color: red;
+}
+
+.buttons-toolbar {
+  display: flex;
+  gap: 10px;
 }

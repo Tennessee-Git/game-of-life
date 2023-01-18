@@ -6,9 +6,8 @@ function App() {
     <div className="app page-container">
       <div className="heading">
         <h1>Game of Life</h1>
-        <button className="button">Start</button>
       </div>
-      <Grid></Grid>
+      <Grid />
     </div>
   );
 }
