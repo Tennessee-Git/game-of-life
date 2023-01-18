@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import "./Grid.css";
 
-const rows = 10;
-const columns = 10;
+const rows = 20;
+const columns = 20;
 const cellSize = 30;
 
-// Directions: N, S, E, W, NE, NW, SE, SW
 const operations = [
   [0, 1], // right
   [0, -1], // left
@@ -26,8 +25,14 @@ function createGrid() {
 }
 
 export const Grid = () => {
-  const [grid, setGrid] = useState();
+  const [grid, setGrid] = useState(() => {
+    return createGrid();
+  });
   const [running, setRunning] = useState(false);
+  const runningRef = useRef(running);
+  runningRef.current = running;
+
+  const [intervalId, setIntervalId] = useState();
 
   const selectBox = (x, y) => {
     let newGrid = JSON.parse(JSON.stringify(grid));
@@ -35,9 +40,33 @@ export const Grid = () => {
     setGrid(newGrid);
   };
 
-  useEffect(() => {
-    setGrid(createGrid());
-  }, []);
+  function runSimulation() {
+    if (!runningRef.current) {
+      return;
+    }
+    setGrid((g) => {
+      const newGrid = g.map((row, i) => {
+        return row.map((cell, j) => {
+          let neighbors = 0;
+          operations.forEach(([x, y]) => {
+            const newI = i + x;
+            const newJ = j + y;
+            if (newI >= 0 && newI < rows && newJ >= 0 && newJ < columns) {
+              neighbors += g[newI][newJ];
+            }
+          });
+          if (neighbors < 2 || neighbors > 3) {
+            return 0;
+          }
+          if (neighbors === 3 && cell === 0) {
+            return 1;
+          }
+          return g[i][j];
+        });
+      });
+      return newGrid;
+    });
+  }
 
   return (
     <div className="grid-wrapper">
@@ -46,6 +75,14 @@ export const Grid = () => {
           className={running ? "button stop" : "button start"}
           onClick={() => {
             setRunning(!running);
+            if (!running) {
+              runningRef.current = true;
+              setIntervalId(
+                setInterval(() => {
+                  runSimulation();
+                }, 500)
+              );
+            } else clearInterval(intervalId);
           }}
         >
           {running ? "Stop " : "Start"}
@@ -55,6 +92,7 @@ export const Grid = () => {
           onClick={() => {
             setRunning(false);
             setGrid(createGrid());
+            clearInterval(intervalId);
           }}
         >
           Reset
