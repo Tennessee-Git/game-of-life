@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import "./Grid.css";
 
-const rows = 20;
-const columns = 20;
+const rows = 25;
+const columns = 60;
 const cellSize = 30;
 
 const operations = [
